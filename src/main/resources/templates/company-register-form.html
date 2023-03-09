@@ -1,0 +1,6 @@
+<form th:action="@{/company/add}" th:object="${company}" method="post">
+  <label>Company name:</label>
+  <input type="text" th:field="*{name}" />
+  <br />
+  <input type="submit" value="Submit" />
+</form>

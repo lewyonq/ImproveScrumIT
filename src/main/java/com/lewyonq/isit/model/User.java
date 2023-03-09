@@ -1,5 +1,6 @@
 package com.lewyonq.isit.model;
 
+import com.lewyonq.isit.enums.ScrumRole;
 import com.lewyonq.isit.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,9 +38,15 @@ public class User implements UserDetails {
     private String password;
     private String firstname;
     private String lastname;
-
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole;
+    @Enumerated(value = EnumType.STRING)
+    private ScrumRole scrumRole;
+    @OneToMany
+    private List<Project> projects;
+    @OneToOne
+    private Company company;
+    private double weight;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
