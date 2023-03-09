@@ -1,0 +1,16 @@
+<form th:action="@{/register}" th:object="${register}" method="post">
+  <label>Email:</label>
+  <input type="text" th:field="*{email}" />
+  <br />
+  <label>Password:</label>
+  <input type="password" th:field="*{password}" />
+  <br />
+  <label>Firstname:</label>
+  <input type="text" th:field="*{firstname}" />
+  <br />
+  <br />
+  <label>Lastname:</label>
+  <input type="text" th:field="*{lastname}" />
+  <br />
+  <input type="submit" value="Submit" />
+</form>
