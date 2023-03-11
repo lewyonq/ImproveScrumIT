@@ -7,11 +7,15 @@ import com.lewyonq.isit.model.RegisterRequest;
 import com.lewyonq.isit.model.User;
 import com.lewyonq.isit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +31,14 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public void addUser(RegisterRequest request, UserRole role) {
+    public void addUser(RegisterRequest request, UserRole role, @AuthenticationPrincipal User owner) throws Exception {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .userRole(role)
+                .company(companyService.findByID(owner.getCompany().getId()))
                 .build();
 
         userRepository.save(user);
@@ -50,5 +55,9 @@ public class UserService implements UserDetailsService {
                 .build();
 
         userRepository.save(user);
+    }
+
+    public List<User> findByCompanyId(Long id) {
+        return userRepository.findByCompanyId(id);
     }
 }

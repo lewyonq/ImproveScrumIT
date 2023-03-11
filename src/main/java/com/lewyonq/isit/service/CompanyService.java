@@ -19,4 +19,9 @@ public class CompanyService {
 
         return company;
     }
+
+    public Company findByID(Long id) throws Exception {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new Exception("Company not found"));
+    }
 }
