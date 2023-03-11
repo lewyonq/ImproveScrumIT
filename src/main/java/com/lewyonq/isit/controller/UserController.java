@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
@@ -20,27 +21,32 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/register")
+    @GetMapping("/add-new")
     public String registerUser(Model model) {
         model.addAttribute("register", new RegisterRequest());
         return "user-register-form";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/add-new")
     public String addUser(@ModelAttribute RegisterRequest request) {
         userService.addUser(request, UserRole.USER);
-        return "redirect:/login";
+        return "redirect:/panel";
     }
 
-    @GetMapping("/register-new-owner")
+    @GetMapping("/add-new-owner")
     public String registerOwner(Model model) {
         model.addAttribute("registerOwner", new OwnerRequest());
         return "owner-register-form";
     }
 
-    @PostMapping("/register-new-owner")
+    @PostMapping("/add-new-owner")
     public String addOwner(@ModelAttribute OwnerRequest request) {
         userService.addOwner(request);
         return "redirect:/login";
+    }
+
+    @GetMapping("/panel")
+    public String showOwnerPanel() {
+        return "owner-panel";
     }
 }

@@ -20,10 +20,4 @@ public class WebController {
     public String viewLoginPage() {
         return "login";
     }
-
-    @GetMapping("/hello")
-    public String viewHelloPage() {
-        return "hello";
-    }
-
 }

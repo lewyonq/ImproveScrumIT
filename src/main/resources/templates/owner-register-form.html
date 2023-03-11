@@ -1,4 +1,8 @@
-<form th:action="@{/user/register-new-owner}" th:object="${registerOwner}" method="post">
+<form th:action="@{/user/add-new-owner}" th:object="${registerOwner}" method="post">
+  <label>Company Name</label>
+  <input type="text" th:field="*{companyName}" />
+  <br />
+  <br />
   <label>Email</label>
   <input type="text" th:field="*{email}" />
   <br />
@@ -10,9 +14,6 @@
   <br />
   <label>Lastname</label>
   <input type="text" th:field="*{lastname}" />
-  <br />
-  <label>Company Name</label>
-  <input type="text" th:field="*{companyName}" />
   <br />
   <input type="submit" value="Submit" />
 </form>
