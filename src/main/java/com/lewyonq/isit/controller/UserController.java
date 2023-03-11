@@ -1,6 +1,9 @@
 package com.lewyonq.isit.controller;
 
+import com.lewyonq.isit.enums.UserRole;
+import com.lewyonq.isit.model.OwnerRequest;
 import com.lewyonq.isit.model.RegisterRequest;
+import com.lewyonq.isit.service.CompanyService;
 import com.lewyonq.isit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,8 +27,20 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String fullfillForm(@ModelAttribute RegisterRequest request) {
-        userService.addUser(request);
+    public String addUser(@ModelAttribute RegisterRequest request) {
+        userService.addUser(request, UserRole.USER);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/register-new-owner")
+    public String registerOwner(Model model) {
+        model.addAttribute("registerOwner", new OwnerRequest());
+        return "owner-register-form";
+    }
+
+    @PostMapping("/register-new-owner")
+    public String addOwner(@ModelAttribute OwnerRequest request) {
+        userService.addOwner(request);
         return "redirect:/login";
     }
 }

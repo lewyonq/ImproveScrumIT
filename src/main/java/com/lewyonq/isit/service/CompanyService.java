@@ -1,7 +1,6 @@
 package com.lewyonq.isit.service;
 
 import com.lewyonq.isit.model.Company;
-import com.lewyonq.isit.model.CompanyRequest;
 import com.lewyonq.isit.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,10 +11,12 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    public void addCompany(CompanyRequest request) {
+    public Company addCompany(String companyName) {
         Company company = Company.builder()
-                .name(request.getName())
+                .name(companyName)
                 .build();
         companyRepository.save(company);
+
+        return company;
     }
 }

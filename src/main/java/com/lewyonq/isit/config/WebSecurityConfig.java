@@ -16,7 +16,7 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/home", "/", "/user/register", "/company/add")
+                .requestMatchers("/home", "/", "/user/**", "/company/**")
                 .permitAll()
                 .requestMatchers("/hello")
                 .hasAuthority("ADMIN")
