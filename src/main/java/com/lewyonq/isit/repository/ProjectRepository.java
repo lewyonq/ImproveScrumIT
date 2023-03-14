@@ -10,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findById(Long id);
-
     //todo: add user to user_who_fullfilled after submit a survey
 }

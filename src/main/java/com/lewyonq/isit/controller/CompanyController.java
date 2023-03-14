@@ -3,8 +3,8 @@ package com.lewyonq.isit.controller;
 import com.lewyonq.isit.model.Company;
 import com.lewyonq.isit.model.NewCompanyRequest;
 import com.lewyonq.isit.model.User;
-import com.lewyonq.isit.repository.UserRepository;
 import com.lewyonq.isit.service.CompanyService;
+import com.lewyonq.isit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/add")
     public String addCompanyPage(Model model) {
@@ -32,19 +32,10 @@ public class CompanyController {
 
     @PostMapping("/add")
     public String addCompany(@ModelAttribute NewCompanyRequest request,
-                             @AuthenticationPrincipal User owner) throws Exception {
-        Company company = Company.builder()
-                .name(request.getCompanyName())
-                .maturityLevel(0)
-                .projects(new ArrayList<>())
-                .users(new ArrayList<>())
-                .build();
+                             @AuthenticationPrincipal User owner) {
 
-        companyService.createNewCompany(company);
-        //todo: add company to user;
-        owner.setCompany(company);
-        userRepository.save(owner);
-
+        companyService.createNewCompany(request, owner);
+        userService.updateUser(owner);
         return "redirect:/user/panel";
     }
 

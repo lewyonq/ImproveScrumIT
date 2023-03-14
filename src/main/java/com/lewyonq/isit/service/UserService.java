@@ -20,7 +20,6 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CompanyService companyService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,14 +27,14 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public void addUser(RegisterRequest request, UserRole role, @AuthenticationPrincipal User owner) throws Exception {
+    public void addUser(RegisterRequest request, UserRole role, @AuthenticationPrincipal User owner) {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .userRole(role)
-                .company(companyService.findByID(owner.getCompany().getId()))
+                .company(owner.getCompany())
                 .build();
 
         userRepository.save(user);
@@ -53,7 +52,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
     public List<User> findByCompanyId(Long id) {
         return userRepository.findByCompanyId(id);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

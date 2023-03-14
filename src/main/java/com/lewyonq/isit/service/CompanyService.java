@@ -6,7 +6,10 @@ import com.lewyonq.isit.model.User;
 import com.lewyonq.isit.repository.CompanyRepository;
 import com.lewyonq.isit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +17,17 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    public void createNewCompany(Company company) {
+    public void createNewCompany(NewCompanyRequest request,
+                                 @AuthenticationPrincipal User owner) {
+
+        Company company = Company.builder()
+                .name(request.getCompanyName())
+                .maturityLevel(0)
+                .projects(new ArrayList<>())
+                .users(new ArrayList<>())
+                .build();
+
+        owner.setCompany(company);
         companyRepository.save(company);
     }
 

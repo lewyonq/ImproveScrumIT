@@ -1,6 +1,7 @@
 package com.lewyonq.isit.service;
 
 import com.lewyonq.isit.model.Project;
+import com.lewyonq.isit.model.User;
 import com.lewyonq.isit.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,11 @@ public class ProjectService {
     }
 
     public void addProject(Project project) {
+        projectRepository.save(project);
+    }
+
+    public void addUserToProject(User user, Project project) {
+        project.getUsers().add(user);
         projectRepository.save(project);
     }
 

@@ -1,0 +1,9 @@
+<form th:action="@{/project/add-user-to-project}" th:object="${projectUserRequest}" method="post">
+    <label>User id:</label>
+    <input type="text" th:field="*{userId}" />
+    <br />
+    <label>Project id:</label>
+    <input type="text" th:field="*{projectId}" />
+    <br />
+    <input type="submit" value="Submit" />
+</form>

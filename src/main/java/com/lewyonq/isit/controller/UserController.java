@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute RegisterRequest request, @AuthenticationPrincipal User owner) throws Exception {
+    public String addUser(@ModelAttribute RegisterRequest request, @AuthenticationPrincipal User owner) {
         userService.addUser(request, UserRole.USER, owner);
         return "redirect:/user/panel";
     }
