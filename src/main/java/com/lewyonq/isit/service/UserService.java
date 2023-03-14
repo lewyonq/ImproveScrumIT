@@ -1,8 +1,6 @@
 package com.lewyonq.isit.service;
 
 import com.lewyonq.isit.enums.UserRole;
-import com.lewyonq.isit.model.Company;
-import com.lewyonq.isit.model.OwnerRequest;
 import com.lewyonq.isit.model.RegisterRequest;
 import com.lewyonq.isit.model.User;
 import com.lewyonq.isit.repository.UserRepository;
@@ -15,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,14 +41,13 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void addOwner(OwnerRequest request) {
+    public void registerOwner(RegisterRequest request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
-                .userRole(request.getRole())
-                .company(companyService.addCompany(request.getCompanyName()))
+                .userRole(UserRole.OWNER)
                 .build();
 
         userRepository.save(user);

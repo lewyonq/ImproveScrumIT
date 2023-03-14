@@ -42,9 +42,10 @@ public class User implements UserDetails {
     private UserRole userRole;
     @Enumerated(value = EnumType.STRING)
     private ScrumRole scrumRole;
-    @OneToMany
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Project> projects;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
     private double weight;
 

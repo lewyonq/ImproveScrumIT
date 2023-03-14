@@ -22,7 +22,7 @@ class SurveyAttemptTest {
     }
 
     @Test
-    public void countMaturityLevelEquals5() {
+    public void countMaturityLevelEquals4() {
         User user = User.builder()
                 .weight(2.0)
                 .build();
@@ -32,7 +32,7 @@ class SurveyAttemptTest {
                 new Question("Text3", ECategory.SCRUM_EVENTS), 3.0,
                 new Question("Text4", ECategory.SCRUM_EVENTS), 0.0,
                 new Question("Text5", ECategory.SCRUM_ARTEFACTS), 4.0,
-                new Question("Text6", ECategory.SCRUM_ARTEFACTS), 1.0);
+                new Question("Text6", ECategory.SCRUM_ARTEFACTS), 2.0);
 
         SurveyAttempt attempt = new SurveyAttempt();
         attempt.setUser(user);
@@ -40,7 +40,28 @@ class SurveyAttemptTest {
 
         attempt.countMaturityLevel();
 
-        assertEquals((11.0 * 2.0) / 6, attempt.getMaturityLevel());
+        assertEquals((12.0 * 2.0) / 6, attempt.getMaturityLevel());
+        //answers
+    }
+
+    @Test
+    public void countMaturityLevelEquals3() {
+        final double NOT_ANSWERED = 0.001;
+        User user = User.builder()
+                .weight(1.0)
+                .build();
+
+        Map<Question, Double> answers = Map.of(new Question("Text1", ECategory.SCRUM_ROLES), 3.0,
+                new Question("Text2", ECategory.SCRUM_ROLES), NOT_ANSWERED,
+                new Question("Text3", ECategory.SCRUM_EVENTS), NOT_ANSWERED);
+
+        SurveyAttempt attempt = new SurveyAttempt();
+        attempt.setUser(user);
+        attempt.setAnswers(answers);
+
+        attempt.countMaturityLevel();
+
+        assertEquals(3.0, attempt.getMaturityLevel());
         //answers
     }
 

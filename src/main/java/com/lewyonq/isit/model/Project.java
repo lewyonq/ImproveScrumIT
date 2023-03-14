@@ -29,8 +29,11 @@ public class Project {
     private String description;
     private double weight;
     private double maturityLevel;
+    @ManyToMany
+    private List<User> users;
     @OneToMany
     private List<User> usersWhoDidSurvey;
-    @OneToMany
-    private List<Survey> surveys;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 }

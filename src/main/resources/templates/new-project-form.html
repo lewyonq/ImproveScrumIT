@@ -1,0 +1,12 @@
+<form th:action="@{/project/add}" th:object="${newProject}" method="post">
+  <label>Name:</label>
+  <input type="text" th:field="*{name}" />
+  <br />
+  <label>Description (optional):</label>
+  <input type="text" th:field="*{description}" />
+  <br />
+  <label>Weight:</label>
+  <input type="text" th:field="*{weight}" />
+  <br />
+  <input type="submit" value="Submit" />
+</form>

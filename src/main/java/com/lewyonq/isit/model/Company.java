@@ -28,10 +28,13 @@ public class Company {
     private Long id;
     private String name;
     private double maturityLevel;
-    @OneToMany
-    private List<Project> projects = new ArrayList<>();
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> users;
 
     public Company(String name) {
         this.name = name;
     }
+
 }

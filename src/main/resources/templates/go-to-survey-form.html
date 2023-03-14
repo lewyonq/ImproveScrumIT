@@ -1,0 +1,6 @@
+<form th:action="@{/survey/fullfill}" th:object="${surveyAttempt}" method="post">
+  <label>Project id:</label>
+  <input type="text" th:field="*{projectId}" />
+  <br />
+  <input type="submit" value="Go to survey!" />
+</form>
